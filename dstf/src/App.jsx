@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -11,6 +12,7 @@ import './index.css'
 const seedContent = [...featuredContent, ...trending]
 
 export default function App() {
+  const [loaded, setLoaded] = useState(false)
   const [activePage, setActivePage] = useState('home')
   const [content, setContent] = useState(seedContent)
 
@@ -29,6 +31,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
       <Navbar activePage={activePage} setActivePage={setActivePage} />
       <main style={{ flex: 1 }}>
         {pages[activePage] || pages.home}
